@@ -5,4 +5,5 @@
 - Frontend: Vue 3 + vue-router + ECharts (vue-echarts), Tailwind CSS 4, dibangun dengan Vite. Entry `resources/js/app.js`.
 - API berada di `routes/web.php` dengan prefix `api/v1` dan memakai sesi web (cookie), bukan token.
 - Data contoh: `php artisan migrate:fresh --seed`. Snapshot sumber di `database/data`.
+- Query harus jalan di SQLite, MySQL, dan PostgreSQL: jangan bandingkan kolom boolean dengan angka (`is_active = 1`), dan uji juga dengan `DB_CONNECTION=pgsql vendor/bin/phpunit`.
 - Gaya kode: Pint (PSR-12 gaya Laravel) untuk PHP, indentasi 4 spasi untuk Vue/JS.

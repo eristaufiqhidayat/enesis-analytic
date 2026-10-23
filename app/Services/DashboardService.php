@@ -147,7 +147,7 @@ class DashboardService
                 SUM(a.calls) as calls, SUM(a.visit) as visit, SUM(a.ec) as ec, SUM(a.effective_call) as effective_call,
                 SUM(a.freq_sale) as freq_sale, SUM(a.total_sku) as total_sku, SUM(a.outlet) as outlet,
                 SUM(a.buying_outlet) as buying_outlet, SUM(a.total_sales) as total_sales, COUNT(*) as hadir,
-                COUNT(DISTINCT CASE WHEN s.is_active = 1 THEN a.salesman_id END) as frontliner_count')
+                COUNT(DISTINCT CASE WHEN s.is_active THEN a.salesman_id END) as frontliner_count')
             ->get();
 
         if ($sales !== null) {
