@@ -1,5 +1,8 @@
 <template>
-    <VChart class="h-[300px] w-full" :option="option" autoresize />
+    <!-- Tinggi dikunci di pembungkus: tanpa ini autoresize ECharts bisa terus membesar. -->
+    <div class="relative w-full overflow-hidden" :style="{ height: `${height}px` }">
+        <VChart :option="option" autoresize style="position: absolute; inset: 0; width: 100%; height: 100%" />
+    </div>
 </template>
 
 <script setup>
@@ -9,6 +12,7 @@ import { COLORS, axisStyle, useChartTheme } from './echarts';
 import { rupiahShort } from '../../utils/format';
 
 const props = defineProps({
+    height: { type: Number, default: 300 },
     rows: { type: Array, default: () => [] }, // [{ label, value }]
 });
 
