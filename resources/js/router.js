@@ -6,18 +6,9 @@ import Dashboard from './pages/Dashboard.vue';
 import Login from './pages/Login.vue';
 import ComingSoon from './pages/ComingSoon.vue';
 import SettingTarget from './pages/SettingTarget.vue';
+import { menu } from './menu';
 
-export const menu = [
-    { path: '/dashboard', label: 'Dashboard', component: Dashboard },
-    { path: '/sales-overview', label: 'Sales Overview' },
-    { path: '/brand-overview', label: 'Brand Overview' },
-    { path: '/heatmap-brand', label: 'Heatmap & Brand' },
-    { path: '/trend-sales', label: 'Trend Sales' },
-    { path: '/canvasser-overview', label: 'Canvasser Overview' },
-    { path: '/data-outlet', label: 'Data Outlet' },
-    { path: '/download-data', label: 'Download Data' },
-    { path: '/setting-target', label: 'Setting Target', component: SettingTarget },
-];
+const pages = { dashboard: Dashboard, 'setting-target': SettingTarget };
 
 const router = createRouter({
     history: createWebHistory(),
@@ -30,7 +21,7 @@ const router = createRouter({
                 { path: '', redirect: '/dashboard' },
                 ...menu.map((item) => ({
                     path: item.path.slice(1),
-                    component: item.component ?? ComingSoon,
+                    component: pages[item.page] ?? ComingSoon,
                     meta: { title: item.label },
                 })),
             ],

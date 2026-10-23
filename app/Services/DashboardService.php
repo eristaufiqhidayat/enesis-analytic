@@ -137,7 +137,8 @@ class DashboardService
     {
         $sales = $this->salesFilterActive() ? $this->salesItemsQuery()
             ->groupBy('si.warehouse_id')
-            ->pluck(DB::raw('SUM(si.omset)'), 'si.warehouse_id') : null;
+            ->selectRaw('si.warehouse_id as id, SUM(si.omset) as omset')
+            ->pluck('omset', 'id') : null;
 
         $rows = $this->activityQuery()
             ->join('salesmen as s', 's.id', '=', 'a.salesman_id')
@@ -199,7 +200,7 @@ class DashboardService
             'kuota' => (int) $r->kuota,
             'actual' => (int) $r->actual,
             'ach_pct' => $this->pct($r->actual, $r->kuota),
-        ])->sortBy('depo', SORT_NATURAL | SORT_FLAG_CASE)->values();
+        ])->sortBy('depo', SORT_STRING)->values();
     }
 
     public function skuPerformance(): array
@@ -256,7 +257,8 @@ class DashboardService
             $sales = $this->salesItemsQuery()
                 ->whereIn('si.salesman_id', $rows->pluck('id_frontliner'))
                 ->groupBy('si.salesman_id')
-                ->pluck(DB::raw('SUM(si.omset)'), 'si.salesman_id');
+                ->selectRaw('si.salesman_id as id, SUM(si.omset) as omset')
+                ->pluck('omset', 'id');
             $rows->each(fn ($r) => $r->total_sales = (int) ($sales[$r->id_frontliner] ?? 0));
         }
 
@@ -333,7 +335,7 @@ class DashboardService
     private function perDepoKpi(Collection $byDepo, callable $actual, float $target): array
     {
         $rows = $byDepo->map(fn ($d) => ['depo' => $d->region, 'actual' => (float) $actual($d)])
-            ->sortBy('depo', SORT_NATURAL | SORT_FLAG_CASE)
+            ->sortBy('depo', SORT_STRING)
             ->values()
             ->map(fn ($r) => $r + ['target' => $target, 'ach_pct' => $this->pct($r['actual'], $target)]);
 

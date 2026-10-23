@@ -63,7 +63,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { menu } from '../router';
+import { menu } from '../menu';
 import { auth, logout } from '../auth';
 
 const router = useRouter();

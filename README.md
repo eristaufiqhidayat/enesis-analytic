@@ -35,6 +35,11 @@ php artisan serve
 Buka `http://localhost:8000` dan masuk dengan akun dari `.env` (`SEED_USER_USERNAME` / `SEED_USER_PASSWORD`,
 bawaan `user` / `password`). **Ganti password ini sebelum dipakai di server.**
 
+Di shared hosting yang membatasi jumlah thread, `npm run build` bisa gagal dengan pesan
+*"Rolldown panicked … ThreadPoolBuildError"*. Jalankan dengan thread dibatasi:
+`RAYON_NUM_THREADS=1 UV_THREADPOOL_SIZE=2 npm run build`, atau build di komputer lokal lalu
+unggah folder `public/build` ke server.
+
 Untuk memuat ulang data snapshot saja: `php artisan db:seed --class=MotorisSnapshotSeeder`.
 
 ## Struktur

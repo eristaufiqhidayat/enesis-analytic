@@ -18,7 +18,7 @@ const option = computed(() => {
     const s = axisStyle(dark.value);
     return {
         animationDuration: 400,
-        grid: { left: 16, right: 16, top: 36, bottom: 8, containLabel: true },
+        grid: { left: 40, right: 16, top: 36, bottom: 8, containLabel: true },
         tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: (v) => `Rp ${new Intl.NumberFormat('id-ID').format(v)}` },
         xAxis: {
             type: 'category',
